@@ -2,7 +2,8 @@ FROM alpine:edge
 
 RUN apk add --no-cache curl tor && rm -rf /var/cache/apk/* && \
     sed "1s/^/SocksPort 0.0.0.0:9050\n/" /etc/tor/torrc.sample > /etc/tor/torrc
-
+# adds sudo & gives to user
+RUN apk add sudo && adduser tor -HG wheel
 EXPOSE 9050 9051
 
 HEALTHCHECK --interval=300s --timeout=15s --start-period=60s --start-interval=10s \
